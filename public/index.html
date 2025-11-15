@@ -44,12 +44,14 @@
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="stylesheet" href="styles/carousel.css">
     <link rel="stylesheet" href="styles/star-border.css">
+    <link rel="stylesheet" href="styles/auth-pricing.css">
     <link rel="preload" href="languages/english.json" as="fetch" crossorigin>
     <script src="scripts/language-loader.js" defer></script>
     <script src="scripts/app.js" defer></script>
     <script src="scripts/carousel.js" defer></script>
     <script src="scripts/star-border.js" defer></script>
     <script src="scripts/sponsors-scroll.js" defer></script>
+    <script src="scripts/auth.js" defer></script>
     
     <!-- Structured Data -->
     <script type="application/ld+json">
@@ -124,19 +126,63 @@
       </div>
     </div>
 
+    <!-- Login/Signup Modal -->
+    <div id="auth-modal" class="modal hidden">
+      <div class="modal-backdrop" id="auth-modal-backdrop"></div>
+      <div class="modal-dialog auth-modal-dialog">
+        <button class="modal-close" id="auth-modal-close" aria-label="Close">✕</button>
+        <div class="auth-container">
+          <div class="auth-header">
+            <h2 id="auth-title">Log in to your account</h2>
+            <p id="auth-subtitle">Welcome back! Please log in to continue.</p>
+          </div>
+          <div class="auth-tabs">
+            <button class="auth-tab active" id="login-tab" data-mode="login">Log in</button>
+            <button class="auth-tab" id="signup-tab" data-mode="signup">Sign up</button>
+          </div>
+          <form id="auth-form" class="auth-form">
+            <div class="form-group">
+              <label for="auth-email">Email</label>
+              <input type="email" id="auth-email" class="form-input" placeholder="your@email.com" required>
+            </div>
+            <div class="form-group">
+              <label for="auth-password">Password</label>
+              <input type="password" id="auth-password" class="form-input" placeholder="Enter your password" required>
+              <a href="#" class="forgot-password" id="forgot-password-link">Forgot password?</a>
+            </div>
+            <button type="submit" class="btn btn-primary auth-submit" id="auth-submit-btn">Continue</button>
+            <div class="auth-divider">
+              <span>or</span>
+            </div>
+            <button type="button" class="btn btn-google" id="google-auth-btn">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z" fill="#4285F4"/>
+                <path d="M9 18c2.43 0 4.467-.806 5.96-2.184l-2.908-2.258c-.806.54-1.837.86-3.052.86-2.347 0-4.33-1.584-5.04-3.711H.978v2.332C2.463 15.983 5.482 18 9 18z" fill="#34A853"/>
+                <path d="M3.96 10.707c-.18-.54-.282-1.117-.282-1.707s.102-1.167.282-1.707V4.951H.978C.348 6.174 0 7.55 0 9s.348 2.826.978 4.049l2.982-2.342z" fill="#FBBC05"/>
+                <path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.463 2.017.978 4.951L3.96 7.293C4.67 5.156 6.653 3.58 9 3.58z" fill="#EA4335"/>
+              </svg>
+              Continue with Google
+            </button>
+            <p class="auth-footer" id="auth-footer">
+              Don't have an account? <a href="#" id="auth-switch-link">Sign up</a>
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+
     <header class="site-header">
       <nav class="nav">
         <div class="brand"><img src="media-webp/logo/Logo64x64.webp" alt="Stagify.ai Logo" class="brand-logo" fetchpriority="high"><span class="brand-strong" data-lang="navigation.brand">stagify</span><span class="brand-light" data-lang="navigation.brandSuffix">.ai</span></div>
         <div class="nav-center">
           <a href="index.html" class="nav-link" data-lang="navigation.home">Home</a>
-          <a href="why.html#why" class="nav-link" data-lang="navigation.whyUs">Why Us?</a>
-          <a href="faq.html#faq" class="nav-link" data-lang="navigation.faq">FAQ</a>
+          <a href="pricing.html" class="nav-link">Pricing</a>
+          <a href="background.html" class="nav-link">Background</a>
           <a href="contact.html#contact" class="nav-link" data-lang="navigation.contactUs">Contact Us</a>
         </div>
-        <div class="mobile-test-text" onmouseover="this.style.transform='scale(1.1)'; this.style.color='#3b82f6'; this.style.textShadow='0 0 20px rgba(59, 130, 246, 0.5)'" onmouseout="this.style.transform='scale(1)'; this.style.color='#1e3a8a'; this.style.textShadow='none'">
-          <div data-lang="hero.title.upload">Upload.</div>
-          <div data-lang="hero.title.stage">Stage.</div>
-          <div data-lang="hero.title.imagine">Imagine.</div>
+        <div class="nav-actions">
+          <button id="login-btn" class="btn-login">Log in</button>
+          <button id="signup-btn" class="btn-signup">Sign up</button>
         </div>
       </nav>
     </header>
@@ -210,6 +256,15 @@
               <div class="sponsor-item">
                 <img src="media-webp/sponsors/Thurman Services.webp" alt="Thurman Services" class="sponsor-logo" fetchpriority="high">
               </div>
+              <div class="sponsor-item">
+                <img src="media-webp/sponsors/Compass.webp" alt="Compass" class="sponsor-logo" fetchpriority="high">
+              </div>
+              <div class="sponsor-item">
+                <img src="media-webp/sponsors/Sothebys.webp" alt="Sotheby's" class="sponsor-logo" fetchpriority="high">
+              </div>
+              <div class="sponsor-item">
+                <img src="media-webp/sponsors/Brown Harris Stevens.webp" alt="Brown Harris Stevens" class="sponsor-logo" fetchpriority="high">
+              </div>
               <!-- Duplicate set for seamless loop -->
               <div class="sponsor-item">
                 <img src="media-webp/sponsors/Centennial.webp" alt="Centennial" class="sponsor-logo" fetchpriority="high">
@@ -228,6 +283,15 @@
               </div>
               <div class="sponsor-item">
                 <img src="media-webp/sponsors/Thurman Services.webp" alt="Thurman Services" class="sponsor-logo" fetchpriority="high">
+              </div>
+              <div class="sponsor-item">
+                <img src="media-webp/sponsors/Compass.webp" alt="Compass" class="sponsor-logo" fetchpriority="high">
+              </div>
+              <div class="sponsor-item">
+                <img src="media-webp/sponsors/Sothebys.webp" alt="Sotheby's" class="sponsor-logo" fetchpriority="high">
+              </div>
+              <div class="sponsor-item">
+                <img src="media-webp/sponsors/Brown Harris Stevens.webp" alt="Brown Harris Stevens" class="sponsor-logo" fetchpriority="high">
               </div>
             </div>
           </div>
